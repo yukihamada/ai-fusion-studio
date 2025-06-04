@@ -1,0 +1,13 @@
+{
+  "overall_coverage": 1.0101010101010102,
+  "module_coverages": {
+    "evaluate.py": 0.0,
+    "experiment_tracker.py": 0.0,
+    "merge_models.py": 0.0,
+    "quantize.py": 0.0,
+    "run_experiment.py": 6.0606060606060606,
+    "web/app.py": 0.0
+  },
+  "timestamp": "2025-06-04T23:30:00",
+  "status": "NEEDS_IMPROVEMENT"
+}
