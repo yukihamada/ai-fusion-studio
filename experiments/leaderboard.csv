@@ -1,0 +1,8 @@
+rank,experiment_id,method,models,mt_bench_score,math_accuracy,quantized_size_gb
+1,demo_experiment,slerp,"microsoft/DialoGPT-small, microsoft/DialoGPT-small",6.8,0.72,0.8
+2,demo_experiment,slerp,"microsoft/DialoGPT-small, microsoft/DialoGPT-small",6.8,0.72,0.8
+3,demo_experiment,slerp,"microsoft/DialoGPT-small, microsoft/DialoGPT-small",6.8,0.72,0.8
+4,demo_experiment,slerp,"microsoft/DialoGPT-small, microsoft/DialoGPT-small",6.8,0.72,0.8
+5,demo_experiment,slerp,"microsoft/DialoGPT-small, microsoft/DialoGPT-small",6.8,0.72,0.8
+6,demo_experiment,slerp,"microsoft/DialoGPT-small, microsoft/DialoGPT-small",6.8,0.72,0.8
+7,demo_experiment,slerp,"microsoft/DialoGPT-small, microsoft/DialoGPT-small",6.8,0.72,0.8

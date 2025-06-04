@@ -1,0 +1,66 @@
+# GLM-4-9B-Chat + Swallow-2B LoRA 長文対応設定
+# 1M context + 日本語語彙拡張
+
+merge_method: lora
+output_path: models/glm4-swallow-long-9b
+
+models:
+  - name: THUDM/glm-4-9b-chat
+    type: base
+    description: "1M context対応ベースモデル"
+    model_config:
+      max_position_embeddings: 1048576  # 1M tokens
+      rope_scaling:
+        type: "yarn"
+        factor: 32
+  - name: tokyotech-llm/Swallow-MS-7b-instruct-v0.1  
+    type: lora
+    description: "日本語語彙・表現拡張用LoRA"
+    adaptation_config:
+      vocab_expansion: true
+      new_tokens: 10000  # 日本語特有トークン追加
+
+# 長文処理最適化
+long_context_optimization:
+  # メモリ効率化
+  gradient_checkpointing: true
+  use_flash_attention: true
+  
+  # コンテキスト処理
+  chunking_strategy: "sliding_window"
+  chunk_size: 4096
+  overlap: 512
+
+# LoRA統合設定
+lora_merge_config:
+  merge_strategy: "weighted"
+  base_model_weight: 0.85
+  lora_weight: 0.15
+  
+  # 特定レイヤーへの適用
+  layer_specific:
+    attention_layers: 0.2  # 注意機構への影響を強化
+    ffn_layers: 0.1       # FFNへの影響は控えめに
+
+# 評価設定
+evaluation:
+  benchmarks:
+    - name: "japanese_long_context_qa"
+      max_length: 32768
+    - name: "multi_doc_summarization"
+      max_docs: 10
+    - name: "code_repository_understanding"
+      
+expected_capabilities:
+  max_context: "1M tokens"
+  japanese_performance: "native_level"
+  model_size: "~6.2GB (quantized)"
+  use_cases:
+    - "論文・技術文書の統合分析"
+    - "大規模コードベースの理解"
+    - "複数文書からの情報抽出"
+
+metadata:
+  description: "超長文対応と日本語能力を両立"
+  key_feature: "1Mトークンのコンテキストで日本語文書を処理"
+  technical_note: "Flash Attentionによりメモリ使用量を最適化"

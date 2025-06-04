@@ -1,0 +1,66 @@
+# StabilityAI軽量日本語モデル設定
+# 商用利用要注意：ライセンス確認が必要
+
+merge_method: slerp
+output_path: models/stability-japanese-mini-1.6b
+
+models:
+  - name: stabilityai/japanese-stablelm-2-base-1_6b
+    type: base
+    weight: 0.8
+    description: "日本語StableLMベースモデル（1.6B）"
+  - name: stabilityai/stablelm-3b-4e1t
+    type: base  
+    weight: 0.2
+    description: "多言語StableLMモデル（3B）"
+
+# SLERP設定
+alpha: 0.8  # 日本語モデルを重視
+
+# マージ時の設定
+merge_settings:
+  dtype: float16
+  device_map: auto
+  low_cpu_mem_usage: true
+  trust_remote_code: false
+
+# 評価設定
+evaluation:
+  benchmarks:
+    - japanese_comprehension
+    - multilingual_capability
+    - instruction_following
+  expected_scores:
+    model_size: 2.2  # GB (float16)
+    language_balance: "jp_focused"
+
+# 後処理設定
+post_merge:
+  apply_lora: false
+  quantization:
+    method: awq
+    bits: 4
+    group_size: 128
+
+# ライセンス警告
+license_warning:
+  commercial_license_required: true
+  stability_membership_needed: true
+  contact: "https://stability.ai/membership"
+  cc_by_sa_component: true
+
+# 実験メタデータ
+metadata:
+  description: "StabilityAI軽量モデルによる日本語強化実験"
+  warning: "商用利用前にStability AIライセンス確認必須"
+  advantages:
+    - "高品質なアーキテクチャ"
+    - "LLaMA系の安定性"
+    - "コンパクトサイズ"
+  limitations:
+    - "商用ライセンス必要"
+    - "ゲート制限の可能性"
+  use_cases:
+    - "研究・学習目的"
+    - "プロトタイプ開発"
+    - "非商用アプリケーション"

@@ -1,0 +1,44 @@
+# Gemma-3-4B-IT + Swallow-2B LoRA マージ設定
+# Reasoning型モデルに日本語スタイルLoRAを後乗せ
+
+merge_method: lora
+output_path: models/gemma3-swallow-lora-4b
+
+models:
+  - name: google/gemma-3-4b-it
+    type: base
+    description: "ベースとなるReasoning型モデル"
+  - name: tokyotech-llm/Swallow-MS-7b-instruct-v0.1
+    type: lora
+    description: "日本語文体・敬語改善用LoRA"
+    lora_config:
+      r: 16
+      lora_alpha: 32
+      target_modules:
+        - q_proj
+        - v_proj
+        - k_proj
+        - o_proj
+      lora_dropout: 0.05
+
+# LoRAマージ設定
+merge_lora: true  # LoRAを完全にベースモデルに統合
+
+# 追加学習設定（オプション）
+fine_tuning:
+  enabled: false
+  dataset: "japanese_instructions_1k"
+  epochs: 1
+  learning_rate: 2e-5
+
+# 期待される改善
+expected_improvements:
+  mt_bench_jp: "+0.3pt"  # 7.2 → 7.5
+  japanese_fluency: "significant"
+  response_style: "more_polite"
+  model_size_increase: "~0.1GB"
+
+metadata:
+  description: "強力な推論モデルに日本語の自然な文体を追加"
+  use_case: "日本のビジネス環境での利用に最適"
+  implementation_ease: "2行のコードで実装可能"

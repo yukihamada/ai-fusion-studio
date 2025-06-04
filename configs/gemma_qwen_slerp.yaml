@@ -1,0 +1,41 @@
+# Gemma-3-4B-IT × Qwen3-4B-Instruct SLERP マージ設定
+# 安定した指示追従＋"thinking"推論を目指す組み合わせ
+
+merge_method: slerp
+output_path: models/gemma3-qwen3-slerp-4b
+
+models:
+  - name: google/gemma-3-4b-it
+    type: base
+    weight: 0.6
+  - name: Qwen/Qwen3-4B-Instruct
+    type: base
+    weight: 0.4
+
+# SLERP設定
+alpha: 0.6  # Gemma寄りの重み配分（コミュニティ報告で良好な結果）
+
+# マージ時の設定
+merge_settings:
+  dtype: float16
+  device_map: auto
+  low_cpu_mem_usage: true
+
+# 評価設定
+evaluation:
+  benchmarks:
+    - mt-bench-jp
+    - jglue
+    - math
+  expected_scores:
+    mt_bench_jp: 8.5  # コミュニティ報告値
+    size_after_quantization: 3.7  # GB (AWQ Q4)
+
+# 実験メタデータ
+metadata:
+  description: "Gemma-3の安定した指示追従能力とQwen3の推論能力を組み合わせる"
+  expected_benefits:
+    - "英日混在プロンプトでの安定性向上"
+    - "Chain-of-Thought推論の改善"
+    - "コード生成タスクの向上"
+  notes: "LocalLLaMA Discordで8.5/10のMT-Benchスコアが報告されている組み合わせ"

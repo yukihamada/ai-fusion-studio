@@ -1,0 +1,68 @@
+# Rinna日本語モデル SLERP マージ設定
+# フリーアクセス可能な軽量日本語LLMを使用した実験
+
+merge_method: slerp
+output_path: models/rinna-japanese-merged-3b
+
+models:
+  - name: rinna/japanese-gpt-neox-3.6b
+    type: base
+    weight: 0.7
+    description: "日本語特化GPT-NeoXモデル（3.6B）"
+  - name: rinna/japanese-gpt-1b
+    type: base
+    weight: 0.3
+    description: "軽量日本語GPTモデル（1.3B）"
+
+# SLERP設定
+alpha: 0.7  # 大きいモデル（3.6B）を重視した配分
+
+# マージ時の設定
+merge_settings:
+  dtype: float16
+  device_map: auto
+  low_cpu_mem_usage: true
+  trust_remote_code: false
+
+# 評価設定
+evaluation:
+  benchmarks:
+    - japanese_text_generation
+    - perplexity_test
+    - coherence_score
+  expected_scores:
+    perplexity: 8.5  # 元モデルの8.68より改善期待
+    model_size: 2.8  # GB (float16)
+    generation_quality: "improved"
+
+# 後処理設定
+post_merge:
+  apply_lora: false
+  quantization:
+    method: dynamic
+    bits: 8
+    enable: true
+
+# ライセンス情報
+license_info:
+  both_models_mit: true
+  commercial_use: allowed
+  redistribution: allowed
+
+# 実験メタデータ
+metadata:
+  description: "フリーアクセス可能なRinna日本語モデル同士のSLERPマージ"
+  advantages:
+    - "完全フリーライセンス（MIT）"
+    - "ゲート制限なし"
+    - "軽量（4B以下）"
+    - "日本語特化"
+    - "同じ開発元による一貫性"
+  expected_benefits:
+    - "語彙豊富性の向上"
+    - "文章生成の多様性改善"
+    - "コンパクトサイズながら高性能"
+  technical_notes:
+    - "GPT-NeoXとGPTアーキテクチャの融合"
+    - "SentencePieceトークナイザー統一"
+    - "日本語コーパス学習済み"

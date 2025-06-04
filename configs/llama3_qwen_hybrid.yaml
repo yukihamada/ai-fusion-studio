@@ -1,0 +1,52 @@
+# Llama-3-8B-JP × Qwen2.5-7B ハイブリッドマージ設定
+# L3系文体＋Qwen推論の組み合わせ
+
+merge_method: slerp
+output_path: models/llama3jp-qwen25-hybrid-7b
+
+models:
+  - name: rinna/llama-3-8b-japanese-instruct
+    type: base
+    weight: 0.5
+  - name: Qwen/Qwen2.5-7B-Instruct
+    type: base  
+    weight: 0.5
+
+# SLERP設定
+alpha: 0.5  # 均等配分で両モデルの特徴を活かす
+
+# ハイブリッド設定
+hybrid_settings:
+  # 異なるサイズのモデルをマージする場合の調整
+  resize_method: "interpolate"  # または "truncate"
+  target_layers: 32  # 共通のレイヤー数に調整
+
+# 後処理
+post_processing:
+  # 語彙の統合
+  merge_vocabularies: true
+  vocab_size: 152064  # 大きい方に合わせる
+  
+  # トークナイザーの調整
+  tokenizer_merge_strategy: "union"
+
+# 量子化設定
+quantization:
+  method: awq
+  bits: 4
+  calibration_dataset: "japanese_web_text"
+
+expected_results:
+  model_size: "~5GB"
+  strengths:
+    - "英日混在プロンプトでの安定性"
+    - "Llama-3の自然な日本語生成"
+    - "Qwen2.5の強力な推論能力"
+  use_cases:
+    - "多言語対応チャットボット"
+    - "技術文書の翻訳・要約"
+
+metadata:
+  description: "異なるアーキテクチャの強みを組み合わせた実験的マージ"
+  challenges: "サイズ差の調整が必要"
+  potential: "両モデルの長所を活かした汎用モデル"

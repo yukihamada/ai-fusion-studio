@@ -1,0 +1,50 @@
+# EvoLLM-JP-A-v1-7B 再現実験設定
+# Sakana AI方式のEvolutionary Mergeによる日本語×数理モデル
+
+merge_method: evolutionary
+output_path: models/evolllm-jp-reproduction-7b
+
+models:
+  - name: shisa-ai/shisa-gamma-7b
+    type: base
+    description: "日本語特化ベースモデル"
+  - name: WizardLM/WizardMath-7B-V1.1
+    type: base
+    description: "数学推論特化モデル"
+  - name: GAIR/Abel-7B-002
+    type: base
+    description: "科学・数理推論モデル"
+
+# 進化的アルゴリズム設定
+evolutionary_settings:
+  population_size: 30
+  generations: 20
+  mutation_rate: 0.15
+  crossover_rate: 0.8
+  selection_method: tournament
+  tournament_size: 3
+  
+  # 評価関数の重み
+  fitness_weights:
+    mt_bench_jp: 0.4
+    math_reasoning: 0.4
+    model_size: 0.2  # サイズペナルティ
+
+# マージ後の最適化
+post_merge:
+  apply_lora: false
+  quantization:
+    method: awq
+    bits: 4
+    group_size: 128
+
+# 期待される結果（オリジナル論文より）
+expected_results:
+  mt_bench_jp: 7.3  # 6.1 → 7.3
+  math_improvement: "+2pt"
+  final_size: "4.5GB (int4)"
+
+metadata:
+  description: "日本語の強みを保ちつつ数理推論を大幅改善"
+  reference: "Sakana AI - Evolutionary Model Merge"
+  key_innovation: "遺伝的アルゴリズムによる最適な重み配分の自動探索"

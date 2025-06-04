@@ -1,0 +1,88 @@
+# Gemma-2-9B-IT × EvoLLM-JP-A-7B MoE設定
+# 日本語全般＋数理特化をトークン毎にルーティング
+
+merge_method: moe  # Mixture of Experts
+output_path: models/gemma2-evolllm-moe-9b
+
+models:
+  - name: google/gemma-2-9b-it
+    type: expert
+    expertise: "general_japanese_chat"
+    weight: 0.6
+  - name: SakanaAI/EvoLLM-JP-A-v1-7B  
+    type: expert
+    expertise: "mathematical_reasoning"
+    weight: 0.4
+
+# MoE設定
+moe_config:
+  num_experts: 2
+  num_experts_per_token: 2  # 各トークンで両エキスパートを使用
+  
+  # ルーティング設定
+  router:
+    type: "learned"  # 学習可能なルーター
+    hidden_size: 512
+    temperature: 0.5
+    noise_epsilon: 0.1
+    
+  # エキスパート別の重み付け
+  expert_weights:
+    # トークンタイプに基づく初期重み
+    default: [0.6, 0.4]
+    mathematical: [0.2, 0.8]  # 数式では数理エキスパートを優先
+    code: [0.3, 0.7]
+    japanese: [0.8, 0.2]  # 日本語ではGemmaを優先
+
+# 統合レイヤー設定
+integration_layers:
+  # 各レイヤーでのエキスパート統合方法
+  method: "weighted_sum"
+  learn_weights: true
+  
+  # レイヤー別設定
+  layer_specific:
+    # 下層：言語理解（Gemma優先）
+    layers_0_8: [0.7, 0.3]
+    # 中層：バランス
+    layers_9_16: [0.5, 0.5]  
+    # 上層：推論（EvoLLM優先）
+    layers_17_24: [0.3, 0.7]
+
+# トレーニング設定（ルーター学習用）
+router_training:
+  dataset: "mixed_japanese_math_10k"
+  epochs: 3
+  learning_rate: 1e-4
+  batch_size: 8
+  
+  # タスク別データ配分
+  data_mixture:
+    general_chat: 0.4
+    mathematical: 0.3
+    coding: 0.2
+    creative_writing: 0.1
+
+# 量子化設定
+quantization:
+  method: "mixed_precision"
+  # エキスパート別の量子化
+  expert_quantization:
+    gemma: "int4"
+    evolllm: "int4"
+  router: "fp16"  # ルーターは高精度を維持
+
+expected_results:
+  model_size: "~8.8GB"
+  capabilities:
+    general_chat: "excellent"
+    math_reasoning: "superior"
+    context_switching: "smooth"
+  performance:
+    mt_bench_jp: 8.0
+    math_benchmark: 85
+    
+metadata:
+  description: "タスクに応じて最適なエキスパートを動的選択"
+  innovation: "日常会話と数理タスクの二刀流を実現"
+  architecture: "Sparse MoE with learned routing"
