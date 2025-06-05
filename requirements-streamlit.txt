@@ -6,13 +6,14 @@ plotly==5.17.0
 PyYAML==6.0.1
 requests==2.31.0
 
-# AI/ML libraries (cloud-compatible versions)
-transformers==4.21.3
-torch==1.13.1
-torchvision==0.14.1
-torchaudio==0.13.1
-
-# Optional dependencies for basic functionality
-scikit-learn==1.3.0
+# Lightweight dependencies for cloud deployment
 matplotlib==3.7.2
 seaborn==0.12.2
+
+# Note: Heavy ML libraries (transformers, torch) are commented out for faster cloud deployment
+# For full functionality, uncomment the lines below (will increase startup time)
+# transformers==4.21.3
+# torch==1.13.1
+# torchvision==0.14.1
+# torchaudio==0.13.1
+# scikit-learn==1.3.0
