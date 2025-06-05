@@ -1,73 +1,73 @@
-# ⚡ AI Fusion Studio - Quick Start Guide
+# ⚡ AI Fusion Studio - クイックスタートガイド
 
-**Get up and running with AI Fusion Studio in under 5 minutes!**
+**AI Fusion Studioを5分以内で使い始める完全ガイド！**
 
 ---
 
-## 🚀 Express Setup (30 seconds)
+## 🚀 超高速セットアップ（30秒）
 
 ```bash
-# 1. Clone and enter directory
-git clone https://github.com/enablerdao/ai-fusion-studio.git && cd ai-fusion-studio
+# 1. リポジトリをクローンして移動
+git clone https://github.com/yukihamada/ai-fusion-studio.git && cd ai-fusion-studio
 
-# 2. Install dependencies
+# 2. 依存関係をインストール
 pip install -r requirements.txt
 
-# 3. Launch Web UI
-streamlit run web/app.py
+# 3. WebUIを起動
+./start_web.sh
 ```
 
-**✅ Done!** Access at http://localhost:8501
+**✅ 完了！** ブラウザで http://localhost:8932 にアクセス
 
 ---
 
-## 🎯 Quick Demo (60 seconds)
+## 🎯 簡単デモ（60秒）
 
 ```bash
-# Run 30-second demonstration
+# 30秒デモンストレーションを実行
 python run_demo.py
 
-# Expected output:
-# ✅ MT-Bench Score: 6.8/10
-# ✅ Model Size: 0.8GB (2.6x compression)
-# ✅ All systems operational
+# 期待される出力:
+# ✅ MT-Benchスコア: 6.8/10
+# ✅ モデルサイズ: 0.8GB (2.6倍圧縮)
+# ✅ 全システム動作確認完了
 ```
 
 ---
 
-## 🧪 First Experiment (2 minutes)
+## 🧪 初回実験（2分）
 
-### Option 1: Web Interface (Recommended)
-1. Open http://localhost:8501
-2. Click **"🚀 新しい実験"**
-3. Select **"初級者向け: 軽量デモ"**
-4. Click **"実験開始"**
+### 方法1: Webインターフェース（推奨）
+1. http://localhost:8932 を開く
+2. **「🚀 新しい実験」** をクリック
+3. **「初級者向け: 日本語特化軽量実験」** を選択
+4. **「実験開始」** をクリック
 
-### Option 2: Command Line
+### 方法2: コマンドライン
 ```bash
-# Run free model experiment (no authentication required)
+# フリーモデルでの実験実行（認証不要）
 python scripts/run_experiment.py configs/rinna_japanese_slerp.yaml
 ```
 
 ---
 
-## 📊 System Check
+## 📊 システム動作確認
 
 ```bash
-# Verify everything works
+# 全システムが正常動作するかチェック
 python auto_test_suite.py
 
-# Expected results:
-# ✅ 5/8 test suites passing (62.5%)
-# ✅ Web UI: 100% functional
-# ✅ Core engine: 95% reliability
+# 期待される結果:
+# ✅ 5/8 テストスイート合格 (62.5%)
+# ✅ WebUI: 100% 機能確認
+# ✅ コアエンジン: 95% 信頼性
 ```
 
 ---
 
-## 🔧 Configuration
+## 🔧 基本設定
 
-### Basic Settings
+### 実験設定の例
 ```yaml
 # configs/my_experiment.yaml
 merge_method: slerp
@@ -78,123 +78,146 @@ models:
     weight: 0.4
 ```
 
-### GPU Setup (Optional)
+### GPU環境セットアップ（オプション）
 ```bash
-# For NVIDIA GPUs
+# NVIDIA GPU用
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
-# For Apple Silicon
-# MPS automatically detected
+# Apple Silicon (M1/M2)
+# MPSは自動で検出されます
 ```
 
 ---
 
-## 📱 Web Interface Overview
+## 📱 Webインターフェース概要
 
-### 🏠 Dashboard
-- **Experiment Statistics**: Total runs, success rate, best scores
-- **Recent Results**: Latest experiment outcomes
-- **System Health**: Real-time status monitoring
+### 🏠 ダッシュボード
+- **実験統計**: 総実行数、成功率、最高スコア
+- **最近の結果**: 最新実験の結果表示
+- **システムヘルス**: リアルタイム状態監視
 
-### 🚀 New Experiment
-- **Preset Configurations**: Beginner to advanced templates
-- **Custom Setup**: Full parameter control
-- **Real-time Progress**: Live execution monitoring
+### 🚀 新しい実験
+- **プリセット設定**: 初級者〜上級者向けテンプレート
+- **カスタム設定**: 完全なパラメータ制御
+- **リアルタイム進捗**: ライブ実行監視
 
-### 📈 Results Analysis
-- **Performance Metrics**: MT-Bench scores, model sizes
-- **Comparison Tools**: Side-by-side experiment analysis
-- **Export Options**: JSON, CSV, comprehensive reports
+### 📈 結果分析
+- **パフォーマンス指標**: MT-Benchスコア、モデルサイズ
+- **比較ツール**: 実験間のサイドバイサイド分析
+- **エクスポートオプション**: JSON、CSV、包括的レポート
 
 ---
 
-## 🎯 Recommended First Steps
+## 🎯 レベル別推奨手順
 
-### 1. **Beginner**: Start with Demo
+### 1. **初心者**: デモから開始
 ```bash
 python run_demo.py
 ```
 
-### 2. **Intermediate**: Try Web Interface
-- Launch: `streamlit run web/app.py`
-- Experiment with preset configurations
-- Explore results analysis tools
+### 2. **中級者**: Webインターフェースを試す
+- 起動: `./start_web.sh`
+- プリセット設定で実験
+- 結果分析ツールを探索
 
-### 3. **Advanced**: Custom Experiments
+### 3. **上級者**: カスタム実験
 ```bash
-# Edit configuration
+# 設定ファイルを編集
 cp configs/rinna_japanese_slerp.yaml configs/my_config.yaml
-# Modify parameters as needed
+# パラメータを必要に応じて変更
 python scripts/run_experiment.py configs/my_config.yaml
 ```
 
 ---
 
-## 🆘 Troubleshooting
+## 🆘 トラブルシューティング
 
-### Common Issues
+### よくある問題と解決策
 
-#### Web UI won't start
+#### WebUIが起動しない
 ```bash
-# Try different port
-streamlit run web/app.py --server.port 8502
+# 別のポートで試行
+./start_web.sh
+# または
+streamlit run web/app.py --server.port 8933
 ```
 
-#### Permission errors
+#### 権限エラー
 ```bash
-# Fix permissions
+# 実行権限を修正
 chmod +x scripts/*.py
 chmod +x start_web.sh
 ```
 
-#### Memory issues
+#### メモリ不足
 ```bash
-# Use smaller models for testing
+# より軽量なモデルを使用
 python scripts/run_experiment.py configs/rinna_japanese_slerp.yaml
 ```
 
-#### GPU not detected
+#### GPUが検出されない
 ```bash
-# Verify GPU availability
+# GPU利用可能性を確認
 python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, MPS: {torch.backends.mps.is_available()}')"
+```
+
+#### 依存関係の問題
+```bash
+# 環境をクリーンアップして再インストール
+pip install --upgrade pip
+pip install -r requirements.txt --force-reinstall
 ```
 
 ---
 
-## 📚 Next Steps
+## 📚 次のステップ
 
-### Explore Advanced Features
-- **Multiple Fusion Methods**: SLERP, Evolutionary, LoRA
-- **Comprehensive Evaluation**: MT-Bench, JGLUE, Math reasoning
-- **Production Quantization**: AWQ, GPTQ, GGUF
+### 高度な機能を探索
+- **複数の融合手法**: SLERP、Evolutionary、LoRA
+- **包括的評価**: MT-Bench、JGLUE、数理推論
+- **プロダクション量子化**: AWQ、GPTQ、GGUF
 
-### Join the Community
-- **GitHub**: https://github.com/enablerdao/ai-fusion-studio
-- **Issues**: Report bugs and request features
-- **Discussions**: Share experiments and results
+### コミュニティに参加
+- **GitHub**: https://github.com/yukihamada/ai-fusion-studio
+- **Issues**: バグレポートと機能要求
+- **Discussions**: 実験結果と議論を共有
 
-### Scale Up
-- **Enterprise Setup**: See `PRODUCTION_READY.md`
-- **Cloud Deployment**: Docker and Kubernetes configurations
-- **Performance Tuning**: Optimization guides available
-
----
-
-## ✨ Success Indicators
-
-You're ready to go when you see:
-
-- ✅ **Web UI loads** at http://localhost:8501
-- ✅ **Demo completes** with MT-Bench score ~6.8
-- ✅ **Test suite** shows 62.5%+ success rate
-- ✅ **Experiment tracking** saves results properly
+### スケールアップ
+- **エンタープライズ設定**: `PRODUCTION_READY.md` を参照
+- **クラウドデプロイ**: DockerとKubernetes設定
+- **パフォーマンス調整**: 最適化ガイド利用可能
 
 ---
 
-**🎉 Welcome to AI Fusion Studio!**
+## ✨ 成功の指標
 
-*Start creating powerful AI model fusions today.*
+以下が確認できれば準備完了です：
+
+- ✅ **WebUIがロード** されている (http://localhost:8932)
+- ✅ **デモが完了** している (MT-Benchスコア ~6.8)
+- ✅ **テストスイート** が62.5%以上成功
+- ✅ **実験追跡** が結果を適切に保存
 
 ---
 
-*Need help? Check the full documentation or open an issue on GitHub.*
+## 🎯 実用的なヒント
+
+### 最初に試すべき実験
+1. **日本語特化**: `configs/rinna_japanese_slerp.yaml`
+2. **軽量高速**: デモワークフローの結果を確認
+3. **カスタム設定**: 重みパラメータを調整
+
+### 結果の解釈
+- **MT-Benchスコア**: 6.0+ = 良好、7.0+ = 優秀、8.0+ = 最高レベル
+- **圧縮率**: 2倍以上 = 効率的、3倍以上 = 非常に効率的
+- **実行時間**: 30分以内 = 軽量、1時間以内 = 標準
+
+---
+
+**🎉 AI Fusion Studio へようこそ！**
+
+*今日から強力なAIモデル融合を始めましょう。*
+
+---
+
+*ヘルプが必要ですか？完全なドキュメントを確認するか、GitHubでIssueを開いてください。*

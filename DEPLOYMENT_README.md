@@ -40,7 +40,7 @@ python run_demo.py
 
 # Webインターフェース起動
 ./start_web.sh
-# → http://localhost:8501
+# → http://localhost:8932
 ```
 
 ### 2. 実際のマージ実験
